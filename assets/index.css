@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.logo {
+    filter: sepia() saturate(10000%) hue-rotate(300deg);
+}
