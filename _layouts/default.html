@@ -1,21 +1,25 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="{{ site.data.manifest['docs.css'] }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#4f1d8a">
-    <meta name="msapplication-TileColor" content="#603cba">
-    <meta name="theme-color" content="#ffffff">
-    <title>{{ page.title }}</title>
-</head>
-<body class="p-8 min-h-screen bg-gray-100">
-    <a href="/"><img src="omnirubus.png" width="100" class="logo invert brightness-25 mb-8"></a>
-    {{ content }}
-</body>
-<footer class="mt-10 space-y-4">
-    <p class="text-xs">© 2023 Omnirubus</p>
-</footer>
+  <head>
+      <link rel="stylesheet" href="{{ site.data.manifest['docs.css'] }}">
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+      <link rel="manifest" href="/site.webmanifest">
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#4f1d8a">
+      <meta name="msapplication-TileColor" content="#603cba">
+      <meta name="theme-color" content="#ffffff">
+      <title>{{ page.title }}</title>
+  </head>
+  <body class="p-8 min-h-screen bg-gray-100">
+      <a href="/"><img src="omnirubus.png" width="100" class="logo invert brightness-25 mb-8"></a>
+      {{ content }}
+  </body>
+  <footer class="mt-10 space-y-4">
+    <p class="text-xs">&copy; <span id="copyright-year"></span> Omnirubus</p>
+  </footer>
+  <!-- JavaScript -->
+  <script>
+  document.getElementById("copyright-year").textContent = new Date().getFullYear();
+  </script>
 </html>
