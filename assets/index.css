@@ -5,3 +5,126 @@
 .logo {
     filter: sepia() saturate(10000%) hue-rotate(300deg);
 }
+
+/* Hover popup styles */
+.hover-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+    will-change: transform, opacity;
+}
+
+.hover-popup.visible {
+    opacity: 1;
+}
+
+/* Jan profile popup */
+#jan-popup img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Work popup - stacked images */
+#work-popup {
+    width: 200px;
+    height: 200px;
+}
+
+/* Fan out animation for stacked images */
+@keyframes fanOut1 {
+    from { opacity: 0; transform: rotate(0deg) translate(10px, 20px) scale(0.95); }
+    to { opacity: 1; transform: rotate(-3deg); }
+}
+@keyframes fanOut2 {
+    from { opacity: 0; transform: rotate(0deg) translate(10px, 20px) scale(0.95); }
+    to { opacity: 1; transform: rotate(2deg); }
+}
+@keyframes fanOut3 {
+    from { opacity: 0; transform: rotate(0deg) translate(10px, 20px) scale(0.95); }
+    to { opacity: 1; transform: rotate(-4deg); }
+}
+@keyframes fanOut4 {
+    from { opacity: 0; transform: rotate(0deg) translate(10px, 20px) scale(0.95); }
+    to { opacity: 1; transform: rotate(5deg); }
+}
+
+#work-popup .stack-image {
+    position: absolute;
+    width: 160px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+}
+
+#work-popup .stack-image:nth-child(1) {
+    z-index: 4;
+    top: 0;
+    left: 0;
+}
+
+#work-popup .stack-image:nth-child(2) {
+    z-index: 3;
+    top: 15px;
+    left: 20px;
+}
+
+#work-popup .stack-image:nth-child(3) {
+    z-index: 2;
+    top: 30px;
+    left: -10px;
+}
+
+#work-popup .stack-image:nth-child(4) {
+    z-index: 1;
+    top: 45px;
+    left: 15px;
+}
+
+/* Staggered animation when popup becomes visible */
+.hover-popup.visible .stack-image:nth-child(1) {
+    animation: fanOut1 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0ms;
+}
+.hover-popup.visible .stack-image:nth-child(2) {
+    animation: fanOut2 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 50ms;
+}
+.hover-popup.visible .stack-image:nth-child(3) {
+    animation: fanOut3 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 100ms;
+}
+.hover-popup.visible .stack-image:nth-child(4) {
+    animation: fanOut4 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 150ms;
+}
+
+/* Hide on touch devices */
+@media (hover: none) {
+    .hover-popup {
+        display: none;
+    }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .hover-popup {
+        transition: none;
+    }
+    #work-popup .stack-image {
+        animation: none;
+        opacity: 1;
+    }
+    #work-popup .stack-image:nth-child(1) { transform: rotate(-3deg); }
+    #work-popup .stack-image:nth-child(2) { transform: rotate(2deg); }
+    #work-popup .stack-image:nth-child(3) { transform: rotate(-4deg); }
+    #work-popup .stack-image:nth-child(4) { transform: rotate(5deg); }
+}
