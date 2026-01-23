@@ -14,6 +14,16 @@
   <body class="p-8 min-h-screen bg-gray-100">
       <a href="/"><img src="omnirubus.png" width="100" class="logo invert brightness-25 mb-8"></a>
       {{ content }}
+  <!-- Hover Popups -->
+  <div id="jan-popup" class="hover-popup">
+      <img src="/assets/images/jan-profile.jpg" alt="Jan">
+  </div>
+  <div id="work-popup" class="hover-popup">
+      <img src="/assets/images/memery.webp" alt="Memery" class="stack-image">
+      <img src="/assets/images/circlin.webp" alt="Circlin" class="stack-image">
+      <img src="/assets/images/lockwell.png" alt="Lockwell" class="stack-image">
+      <img src="/assets/images/mrd.webp" alt="MRD" class="stack-image">
+  </div>
   </body>
   <footer class="mt-10 space-y-4">
     <p class="text-xs">&copy; <span id="copyright-year"></span> Omnirubus</p>
@@ -21,5 +31,86 @@
   <!-- JavaScript -->
   <script>
   document.getElementById("copyright-year").textContent = new Date().getFullYear();
+
+  // Hover popup cursor tracking
+  (function() {
+      const hoverTargets = document.querySelectorAll('[data-hover-target]');
+      if (!hoverTargets.length) return;
+
+      // Check for touch device
+      const isTouchDevice = window.matchMedia('(hover: none)').matches;
+      if (isTouchDevice) return;
+
+      let mouseX = 0, mouseY = 0;
+      let currentX = 0, currentY = 0;
+      let activePopup = null;
+      let animationId = null;
+
+      function lerp(start, end, factor) {
+          return start + (end - start) * factor;
+      }
+
+      function updatePosition() {
+          if (!activePopup) {
+              animationId = null;
+              return;
+          }
+
+          currentX = lerp(currentX, mouseX + 20, 0.15);
+          currentY = lerp(currentY, mouseY + 15, 0.15);
+
+          activePopup.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+          animationId = requestAnimationFrame(updatePosition);
+      }
+
+      function showPopup(popup) {
+          if (activePopup === popup) return;
+          activePopup = popup;
+          popup.classList.add('visible');
+          if (!animationId) {
+              animationId = requestAnimationFrame(updatePosition);
+          }
+      }
+
+      function hidePopup(popup) {
+          if (activePopup === popup) {
+              activePopup = null;
+          }
+
+          // Check if this popup has stacked images (needs animated hide)
+          if (popup.querySelector('.stack-image')) {
+              popup.classList.add('hiding');
+              setTimeout(() => {
+                  popup.classList.remove('visible');
+                  popup.classList.remove('hiding');
+              }, 100);
+          } else {
+              popup.classList.remove('visible');
+          }
+      }
+
+      hoverTargets.forEach(target => {
+          const popupId = target.dataset.hoverTarget;
+          const popup = document.getElementById(popupId);
+          if (!popup) return;
+
+          target.addEventListener('mouseenter', (e) => {
+              mouseX = e.clientX;
+              mouseY = e.clientY;
+              currentX = mouseX + 20;
+              currentY = mouseY + 15;
+              showPopup(popup);
+          });
+
+          target.addEventListener('mouseleave', () => {
+              hidePopup(popup);
+          });
+
+          target.addEventListener('mousemove', (e) => {
+              mouseX = e.clientX;
+              mouseY = e.clientY;
+          });
+      });
+  })();
   </script>
 </html>
