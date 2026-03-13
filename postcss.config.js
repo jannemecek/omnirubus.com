@@ -1,7 +1,9 @@
 const purgecss = require('@fullhuman/postcss-purgecss')({
     content: [
-        // Jekyll output directory
         './_site/**/*.html',
+        './_includes/**/*.html',
+        './_layouts/**/*.html',
+        './*.html',
     ],
     defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
 });
